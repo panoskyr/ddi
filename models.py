@@ -16,3 +16,14 @@ class NeuralNet(torch.nn.Module):
 
         output=torch.sigmoid(x)
         return output
+    
+
+class LogisticRegressionModel(torch.nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(LogisticRegressionModel, self).__init__()
+        self.linear = torch.nn.Linear(input_dim, output_dim,dtype=torch.float64)
+
+    def forward(self, inputs):
+        x = self.linear(inputs)
+        out=torch.sigmoid(x)
+        return out
