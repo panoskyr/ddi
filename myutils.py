@@ -20,3 +20,4 @@ def get_dict_from_file(filename):
 
 def save_tensor_to_file(filename, data):
     torch.save(data, filename+".pt")
+

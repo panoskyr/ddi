@@ -2,6 +2,7 @@ import math
 import torch
 from torch_geometric.nn import SAGEConv 
 
+
 class NeuralNet(torch.nn.Module):
     def __init__(self):
         super(NeuralNet, self).__init__()
@@ -27,3 +28,11 @@ class LogisticRegressionModel(torch.nn.Module):
         x = self.linear(inputs)
         out=torch.sigmoid(x)
         return out
+    
+def BinaryAccuracy(preds, true_labels):
+    rounded_preds = torch.round(preds)
+    # the equality operator on tensors returns True/False
+    correct = (rounded_preds == true_labels).float()
+    acc = correct.sum() / len(correct)
+    return acc
+
