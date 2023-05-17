@@ -1,7 +1,7 @@
 import math
 import torch
 from torch_geometric.nn import SAGEConv 
-
+import torch.nn.functional as F
 
 class NeuralNet(torch.nn.Module):
     def __init__(self):
@@ -36,3 +36,38 @@ def BinaryAccuracy(preds, true_labels):
     acc = correct.sum() / len(correct)
     return acc
 
+class SAGE(torch.nn.Module):
+    def __init__(self, in_channels, hidden_channels, out_channels, num_layers,
+                 dropout, aggr="add"):
+        super(SAGE, self).__init__()
+
+        self.convs = torch.nn.ModuleList()
+        self.convs.append(SAGEConv(in_channels, hidden_channels, normalize=True, aggr=aggr))
+        for _ in range(num_layers - 2):
+            self.convs.append(SAGEConv(hidden_channels, hidden_channels, normalize=True, aggr=aggr))
+        self.convs.append(SAGEConv(hidden_channels, out_channels, normalize=True, aggr=aggr))
+
+        self.dropout = dropout
+
+    def reset_parameters(self):
+        for conv in self.convs:
+            conv.reset_parameters()
+
+    def forward(self, x, adj_t):
+        for conv in self.convs[:-1]:
+            x = conv(x, adj_t)
+            x = F.relu(x)
+            x = F.dropout(x, p=self.dropout, training=self.training)
+        x = self.convs[-1](x, adj_t)
+        return x
+
+class DotProductLinkPredictor(torch.nn.Module):
+    def __init__(self):
+        super(DotProductLinkPredictor, self).__init__()
+
+    def forward(self, x_i, x_j):
+        out = (x_i*x_j).sum(-1)
+        return torch.sigmoid(out)
+    
+    def reset_parameters(self):
+      pass
