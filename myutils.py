@@ -30,3 +30,13 @@ def draw_metric_per_epoch(metric, title, ylabel, xlabel, filename="fil1"):
     plt.show()
     plt.savefig(filename+".png")
     plt.close()
+
+
+def load_data_from_txt(filename):
+    with open(filename+".txt", "r") as myfile:
+        to_return={}
+        for line in myfile:
+            (key,value)=line.split()
+            to_return[int(key)]=(float(value))
+    return to_return
+
