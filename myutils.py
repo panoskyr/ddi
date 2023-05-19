@@ -27,5 +27,6 @@ def draw_metric_per_epoch(metric, title, ylabel, xlabel, filename="fil1"):
     plt.title(title)
     plt.ylabel(ylabel)
     plt.xlabel(xlabel)
+    plt.show()
     plt.savefig(filename+".png")
     plt.close()

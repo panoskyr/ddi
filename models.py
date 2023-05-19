@@ -34,7 +34,7 @@ def BinaryAccuracy(preds, true_labels):
     # the equality operator on tensors returns True/False
     correct = (rounded_preds == true_labels).float()
     acc = correct.sum() / len(correct)
-    return acc
+    return acc.item()
 
 class SAGE(torch.nn.Module):
     def __init__(self, in_channels, hidden_channels, out_channels, num_layers,
