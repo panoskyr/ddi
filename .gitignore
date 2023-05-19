@@ -4,3 +4,5 @@ ddi.py
 *.pyc
 *.png
 
+__pycache__/models.cpython-310.pyc
+__pycache__/myutils.cpython-310.pyc
