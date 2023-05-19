@@ -113,5 +113,5 @@ class NeuralLinkPredictor(torch.nn.Module):
             x = F.relu(x)
             x = F.dropout(x, p=self.dropout, training=self.training)
         x = self.lins[-1](x)
-        print(torch.sigmoid(x).squeeze().shape, torch.sigmoid(x).shape)
+        print("squeeze shape: " ,torch.sigmoid(x).squeeze().shape,"nos queeze shape: ", torch.sigmoid(x).shape)
         return torch.sigmoid(x).squeeze()
