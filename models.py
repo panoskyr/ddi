@@ -61,11 +61,25 @@ class SAGE(torch.nn.Module):
         x = self.convs[-1](x, adj_t)
         return x
 
+## the predictor takes two tensors
+## of node embeding h1 h2
+## with size [batch_size, embed_dim]
 class DotProductLinkPredictor(torch.nn.Module):
     def __init__(self):
         super(DotProductLinkPredictor, self).__init__()
 
     def forward(self, x_i, x_j):
+        print("preidctore input: ", x_i.shape,x_j.shape)
+        # multiply the embeddings of a src_node and a dest_node
+        # for each edge in the batch
+        # then sum the result per edge
+        # example of x_i*x_j:
+        # x_i=[emb1, emb2, emb3]
+        # x_j=[emb5, emb6, emb7]
+        # x_i*x_j=[emb1*emb5, emb2*emb6, emb3*emb7]
+        # out=[sum(emb1*emb5), sum(emb2*emb6), sum(emb3*emb7)]
+        # this is the way to combine the info (in the embeddings) that two nodes are connected or not
+        # then pass the result to the sigmoid
         out = (x_i*x_j).sum(-1)
         return torch.sigmoid(out)
     
