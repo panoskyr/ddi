@@ -1,4 +1,5 @@
 import torch
+import matplotlib.pyplot as plt
 
 # saves to a txt file afeture in the form of node_number:feature
 def save_to_txt(filename, data):
@@ -21,3 +22,10 @@ def get_dict_from_file(filename):
 def save_tensor_to_file(filename, data):
     torch.save(data, filename+".pt")
 
+def draw_metric_per_epoch(metric, title, ylabel, xlabel, filename="fil1"):
+    plt.plot(metric)
+    plt.title(title)
+    plt.ylabel(ylabel)
+    plt.xlabel(xlabel)
+    plt.savefig(filename+".png")
+    plt.close()

@@ -2,5 +2,5 @@ dataset
 settings.json
 ddi.py
 *.pyc
-
+*.png
 
