@@ -3,6 +3,7 @@ import torch
 from torch_geometric.nn import SAGEConv 
 import torch.nn.functional as F
 import torch_geometric.nn
+from torch import Tensor
 
 class NeuralNet(torch.nn.Module):
     def __init__(self):
