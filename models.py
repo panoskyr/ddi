@@ -234,4 +234,12 @@ class EdgeSAGE(torch.nn.Module):
         return x
     
 
-
+# a custom loss function which is a BCE with different weights for 
+# positive and negative samples
+def custom_loss(predictions, correct_labels, pos_weight=0.5):
+    print("predictions: ", predictions.shape, "correct_labels: ", correct_labels.shape)
+    pos_loss=pos_weight*correct_labels*torch.log(predictions)
+    neg_loss=(1-correct_labels)*torch.log(1-predictions)
+    loss = -torch.mean(pos_loss+neg_loss)
+    print("loss: ", loss)
+    return loss
